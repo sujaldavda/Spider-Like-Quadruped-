@@ -5,7 +5,7 @@ to explore mechanical design, electronics integration,
 robot kinematics and coordinated multi-servo control.
 
 Demo Video:
-[video link]
+https://drive.google.com/file/d/1aahqjPfIVHdNBdxC4B8d9cbAuSaYIsEc/view
 
 Hardware:
 - ESP8266
