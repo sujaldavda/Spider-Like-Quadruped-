@@ -1,0 +1,506 @@
+<?xml version="1.0"?>
+<!--
+  Spider-Like Quadruped, 12 DOF (SG90).
+  Frame: x forward, y left, z up. Meshes are the assembly-space STLs (mm, Y-up),
+  placed with scale 0.001 and rpy "1.5708 0 1.5708".
+  Zero joint angles = CAD assembly pose. Joint axis points from servo body to horn.
+  Joint limits = CAD self-collision sweep (3 deg steps, other joints at zero) capped at +/-90 deg servo travel.
+  Masses: SG90 9 g, horn 0.5 g, printed parts 0.8 g/cm3, electronics + 2S 18650 lumped as 130 g in base.
+-->
+<robot name="spider_quadruped">
+
+  <material name="print"><color rgba="0.85 0.85 0.85 1"/></material>
+  <material name="servo"><color rgba="0.15 0.35 0.8 1"/></material>
+  <material name="horn"><color rgba="0.95 0.95 0.95 1"/></material>
+
+  <!-- ===================== BASE ===================== -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0.0086" rpy="0 0 0"/>
+      <mass value="0.2025"/>
+      <inertia ixx="7.194e-05" ixy="0" ixz="0" iyy="7.012e-05" iyz="0" izz="1.310e-04"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.0675254 -0.132465 -0.054649" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - base 5.0 remake-1.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0675254 -0.132465 -0.054649" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-1.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0675254 -0.132465 -0.054649" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-4.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0675254 -0.132465 -0.054649" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-5.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0675254 -0.132465 -0.054649" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-6.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.0675254 -0.132465 -0.054649" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - base 5.0 remake-1.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <!-- ===================== FRONT LEFT ===================== -->
+  <joint name="FL_coxa_joint" type="revolute">
+    <parent link="base_link"/><child link="FL_coxa"/>
+    <origin xyz="0.03752 0.037166 0.02855" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.5708" upper="0.5236" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="FL_coxa">
+    <inertial>
+      <origin xyz="-0.00046952 0.025303 -0.011077" rpy="0 0 0"/>
+      <mass value="0.010901"/>
+      <inertia ixx="1.3433e-06" ixy="7.7895e-08" ixz="-6.036e-08" iyy="1.1827e-06" iyz="2.6762e-07" izz="1.1172e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.105045 -0.169631 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - clamp 1 redesigned-1.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.105045 -0.169631 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-1.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.105045 -0.169631 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-2.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.105045 -0.169631 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - clamp 1 redesigned-1.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="FL_femur_joint" type="revolute">
+    <parent link="FL_coxa"/><child link="FL_femur"/>
+    <origin xyz="0.016051 0.024277 -0.0074" rpy="0 0 0"/>
+    <axis xyz="0.9862 -0.1656 0"/>
+    <limit lower="-1.5708" upper="1.5708" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="FL_femur">
+    <inertial>
+      <origin xyz="0.0037466 0.020988 0.0058263" rpy="0 0 0"/>
+      <mass value="0.0024496"/>
+      <inertia ixx="6.2957e-07" ixy="-8.8356e-08" ixz="-2.2326e-08" iyy="1.2071e-07" iyz="-1.359e-07" izz="5.4206e-07"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.121096 -0.193908 -0.075799" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - mid clamp redesign-1.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.121096 -0.193908 -0.075799" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-2.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.121096 -0.193908 -0.075799" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-3.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.121096 -0.193908 -0.075799" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - mid clamp redesign-1.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="FL_tibia_joint" type="revolute">
+    <parent link="FL_femur"/><child link="FL_tibia"/>
+    <origin xyz="0.0063376 0.037747 0.014863" rpy="0 0 0"/>
+    <axis xyz="0.9862 -0.1656 0"/>
+    <limit lower="-0.9948" upper="1.5708" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="FL_tibia">
+    <inertial>
+      <origin xyz="-0.015733 0.0077231 -0.013664" rpy="0 0 0"/>
+      <mass value="0.014061"/>
+      <inertia ixx="7.1221e-06" ixy="-1.1556e-07" ixz="2.9199e-07" iyy="6.6603e-06" iyz="1.6351e-06" izz="1.4786e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.127433 -0.231655 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia RD-1.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.127433 -0.231655 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia tip-1.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.127433 -0.231655 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-3.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.127433 -0.231655 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia RD-1.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.127433 -0.231655 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia tip-1.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="FL_foot_joint" type="fixed">
+    <parent link="FL_tibia"/><child link="FL_foot"/>
+    <origin xyz="-0.01356 0.018587 -0.089869" rpy="0 0 0"/>
+  </joint>
+  <link name="FL_foot"/>
+
+  <!-- ===================== REAR LEFT ===================== -->
+  <joint name="RL_coxa_joint" type="revolute">
+    <parent link="base_link"/><child link="RL_coxa"/>
+    <origin xyz="-0.037166 0.03752 0.02855" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.5760" upper="1.5708" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="RL_coxa">
+    <inertial>
+      <origin xyz="-0.0013273 0.025273 -0.010665" rpy="0 0 0"/>
+      <mass value="0.010901"/>
+      <inertia ixx="1.3421e-06" ixy="-6.574e-08" ixz="4.0386e-08" iyy="1.161e-06" iyz="2.6305e-07" izz="1.1172e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.0303594 -0.169984 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Mirrorclamp 1 redesigned-1.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0303594 -0.169984 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-4.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0303594 -0.169984 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-7.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.0303594 -0.169984 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Mirrorclamp 1 redesigned-1.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="RL_femur_joint" type="revolute">
+    <parent link="RL_coxa"/><child link="RL_femur"/>
+    <origin xyz="-0.017733 0.023077 -0.0069" rpy="0 0 0"/>
+    <axis xyz="-0.972 -0.2352 0"/>
+    <limit lower="-1.5708" upper="1.5708" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="RL_femur">
+    <inertial>
+      <origin xyz="-0.005173 0.020448 0.0066131" rpy="0 0 0"/>
+      <mass value="0.0024496"/>
+      <inertia ixx="6.1528e-07" ixy="1.2108e-07" ixz="3.5638e-08" iyy="1.4603e-07" iyz="-1.4931e-07" izz="5.3144e-07"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.0126263 -0.193062 -0.076299" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Mirrormid clamp redesign---------------------1.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0126263 -0.193062 -0.076299" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-5.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0126263 -0.193062 -0.076299" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-6.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.0126263 -0.193062 -0.076299" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Mirrormid clamp redesign---------------------1.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="RL_tibia_joint" type="revolute">
+    <parent link="RL_femur"/><child link="RL_tibia"/>
+    <origin xyz="-0.0088641 0.036639 0.016275" rpy="0 0 0"/>
+    <axis xyz="-0.972 -0.2352 0"/>
+    <limit lower="-1.5708" upper="0.9948" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="RL_tibia">
+    <inertial>
+      <origin xyz="0.014988 0.0094516 -0.013408" rpy="0 0 0"/>
+      <mass value="0.014061"/>
+      <inertia ixx="7.0932e-06" ixy="1.8779e-07" ixz="-4.667e-07" iyy="6.518e-06" iyz="1.8427e-06" izz="1.65e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.00376213 -0.229701 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia RD-2.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.00376213 -0.229701 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia tip-2.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.00376213 -0.229701 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-8.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.00376213 -0.229701 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia RD-2.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.00376213 -0.229701 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia tip-2.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="RL_foot_joint" type="fixed">
+    <parent link="RL_tibia"/><child link="RL_foot"/>
+    <origin xyz="0.011155 0.022571 -0.089045" rpy="0 0 0"/>
+  </joint>
+  <link name="RL_foot"/>
+
+  <!-- ===================== REAR RIGHT ===================== -->
+  <joint name="RR_coxa_joint" type="revolute">
+    <parent link="base_link"/><child link="RR_coxa"/>
+    <origin xyz="-0.03752 -0.037166 0.02855" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.5708" upper="0.5760" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="RR_coxa">
+    <inertial>
+      <origin xyz="-0.0015781 -0.02548 -0.010665" rpy="0 0 0"/>
+      <mass value="0.010901"/>
+      <inertia ixx="1.3287e-06" ixy="4.6707e-08" ixz="3.4993e-08" iyy="1.2335e-06" iyz="-2.6174e-07" izz="1.1761e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.0300058 -0.0952989 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Mirrorclamp 1 redesigned-2.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0300058 -0.0952989 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-7.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0300058 -0.0952989 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-9.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.0300058 -0.0952989 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Mirrorclamp 1 redesigned-2.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="RR_femur_joint" type="revolute">
+    <parent link="RR_coxa"/><child link="RR_femur"/>
+    <origin xyz="-0.01738 -0.023431 -0.0069" rpy="0 0 0"/>
+    <axis xyz="-0.972 0.2352 0"/>
+    <limit lower="-1.5708" upper="1.5708" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="RR_femur">
+    <inertial>
+      <origin xyz="-0.0052527 -0.020428 0.0066131" rpy="0 0 0"/>
+      <mass value="0.0024496"/>
+      <inertia ixx="6.1521e-07" ixy="-1.2122e-07" ixz="3.5146e-08" iyy="1.461e-07" iyz="1.4943e-07" izz="5.3144e-07"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.0126263 -0.0718681 -0.076299" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Mirrormid clamp redesign---------------------2.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0126263 -0.0718681 -0.076299" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-8.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0126263 -0.0718681 -0.076299" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-9.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.0126263 -0.0718681 -0.076299" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Mirrormid clamp redesign---------------------2.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="RR_tibia_joint" type="revolute">
+    <parent link="RR_femur"/><child link="RR_tibia"/>
+    <origin xyz="-0.0088641 -0.036639 0.016275" rpy="0 0 0"/>
+    <axis xyz="-0.972 0.2352 0"/>
+    <limit lower="-1.0996" upper="1.5708" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="RR_tibia">
+    <inertial>
+      <origin xyz="0.014988 -0.0094516 -0.013408" rpy="0 0 0"/>
+      <mass value="0.014061"/>
+      <inertia ixx="7.0932e-06" ixy="-1.8779e-07" ixz="-4.667e-07" iyy="6.518e-06" iyz="-1.8427e-06" izz="1.65e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.00376213 -0.0352287 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia RD-3.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.00376213 -0.0352287 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia tip-3.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.00376213 -0.0352287 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-10.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.00376213 -0.0352287 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia RD-3.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.00376213 -0.0352287 -0.0925738" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia tip-3.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="RR_foot_joint" type="fixed">
+    <parent link="RR_tibia"/><child link="RR_foot"/>
+    <origin xyz="0.011155 -0.022571 -0.089045" rpy="0 0 0"/>
+  </joint>
+  <link name="RR_foot"/>
+
+  <!-- ===================== FRONT RIGHT ===================== -->
+  <joint name="FR_coxa_joint" type="revolute">
+    <parent link="base_link"/><child link="FR_coxa"/>
+    <origin xyz="0.037166 -0.03752 0.02855" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.5236" upper="1.5708" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="FR_coxa">
+    <inertial>
+      <origin xyz="0.00049728 -0.024847 -0.011077" rpy="0 0 0"/>
+      <mass value="0.010901"/>
+      <inertia ixx="1.333e-06" ixy="-5.2976e-08" ixz="-5.7648e-08" iyy="1.252e-06" iyz="-2.6716e-07" izz="1.1761e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.104691 -0.0949453 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - clamp 1 redesigned-2.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.104691 -0.0949453 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-10.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.104691 -0.0949453 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-11.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.104691 -0.0949453 -0.083199" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - clamp 1 redesigned-2.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="FR_femur_joint" type="revolute">
+    <parent link="FR_coxa"/><child link="FR_femur"/>
+    <origin xyz="0.016404 -0.023924 -0.0074" rpy="0 0 0"/>
+    <axis xyz="0.9862 0.1656 0"/>
+    <limit lower="-1.5708" upper="1.5708" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="FR_femur">
+    <inertial>
+      <origin xyz="0.0038275 -0.020974 0.0058263" rpy="0 0 0"/>
+      <mass value="0.0024496"/>
+      <inertia ixx="6.2952e-07" ixy="8.8493e-08" ixz="-2.1821e-08" iyy="1.2075e-07" iyz="1.3599e-07" izz="5.4205e-07"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.121096 -0.0710214 -0.075799" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - mid clamp redesign-2.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.121096 -0.0710214 -0.075799" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-11.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.121096 -0.0710214 -0.075799" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - servo horn-12.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="horn"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.121096 -0.0710214 -0.075799" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - mid clamp redesign-2.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="FR_tibia_joint" type="revolute">
+    <parent link="FR_femur"/><child link="FR_tibia"/>
+    <origin xyz="0.0063376 -0.037747 0.014863" rpy="0 0 0"/>
+    <axis xyz="0.9862 0.1656 0"/>
+    <limit lower="-1.5708" upper="0.9948" effort="0.2" velocity="10.5"/>
+    <dynamics damping="0.02" friction="0.0"/>
+  </joint>
+  <link name="FR_tibia">
+    <inertial>
+      <origin xyz="-0.015733 -0.0077231 -0.013664" rpy="0 0 0"/>
+      <mass value="0.014061"/>
+      <inertia ixx="7.1221e-06" ixy="1.1556e-07" ixz="2.9199e-07" iyy="6.6603e-06" iyz="-1.6351e-06" izz="1.4786e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.127433 -0.0332746 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia RD-4.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.127433 -0.0332746 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia tip-4.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="print"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.127433 -0.0332746 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - Servo_motor.step-12.STL" scale="0.001 0.001 0.001"/></geometry>
+      <material name="servo"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.127433 -0.0332746 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia RD-4.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.127433 -0.0332746 -0.0906616" rpy="1.5708 0 1.5708"/>
+      <geometry><mesh filename="../meshes/quadrapod reddit - tibia tip-4.STL" scale="0.001 0.001 0.001"/></geometry>
+    </collision>
+  </link>
+
+  <joint name="FR_foot_joint" type="fixed">
+    <parent link="FR_tibia"/><child link="FR_foot"/>
+    <origin xyz="-0.01356 -0.018587 -0.089869" rpy="0 0 0"/>
+  </joint>
+  <link name="FR_foot"/>
+
+</robot>

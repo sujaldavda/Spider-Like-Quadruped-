@@ -1,0 +1,236 @@
+<!--
+  Spider-Like Quadruped, 12 DOF (SG90). Matches quadruped.urdf.
+  Frame: x forward, y left, z up. Zero joint angles = CAD assembly pose.
+  Joint limits = CAD self-collision sweep capped at +/-90 deg servo travel.
+-->
+<mujoco model="spider_quadruped">
+  <compiler angle="radian" meshdir="../meshes/" autolimits="true"/>
+  <option timestep="0.001" integrator="implicitfast"/>
+
+  <default>
+    <mesh scale="0.001 0.001 0.001"/>
+    <joint damping="0.02" armature="0.0005" frictionloss="0.001" range="-1.5708 1.5708"/>
+    <position kp="3" kv="0.03" forcerange="-0.2 0.2" inheritrange="1"/>
+    <default class="visual">
+      <geom type="mesh" contype="0" conaffinity="0" group="2" density="0" quat="0.5 0.5 0.5 0.5" material="print"/>
+      <default class="servo"><geom material="servo"/></default>
+      <default class="horn"><geom material="horn"/></default>
+    </default>
+    <default class="collision">
+      <!-- collide with the floor only (self-collision is prevented by joint limits) -->
+      <geom type="mesh" group="3" density="0" quat="0.5 0.5 0.5 0.5" friction="0.8 0.02 0.01" rgba="1 0.3 0.3 0.4"
+        contype="0" conaffinity="1" solref="0.004 1"/>
+    </default>
+  </default>
+
+  <asset>
+    <material name="print" rgba="0.85 0.85 0.85 1"/>
+    <material name="servo" rgba="0.15 0.35 0.8 1"/>
+    <material name="horn" rgba="0.95 0.95 0.95 1"/>
+
+    <mesh name="base" file="quadrapod reddit - base 5.0 remake-1.STL"/>
+    <mesh name="servo_1" file="quadrapod reddit - Servo_motor.step-1.STL"/>
+    <mesh name="servo_2" file="quadrapod reddit - Servo_motor.step-2.STL"/>
+    <mesh name="servo_3" file="quadrapod reddit - Servo_motor.step-3.STL"/>
+    <mesh name="servo_4" file="quadrapod reddit - Servo_motor.step-4.STL"/>
+    <mesh name="servo_5" file="quadrapod reddit - Servo_motor.step-5.STL"/>
+    <mesh name="servo_6" file="quadrapod reddit - Servo_motor.step-6.STL"/>
+    <mesh name="servo_7" file="quadrapod reddit - Servo_motor.step-7.STL"/>
+    <mesh name="servo_8" file="quadrapod reddit - Servo_motor.step-8.STL"/>
+    <mesh name="servo_9" file="quadrapod reddit - Servo_motor.step-9.STL"/>
+    <mesh name="servo_10" file="quadrapod reddit - Servo_motor.step-10.STL"/>
+    <mesh name="servo_11" file="quadrapod reddit - Servo_motor.step-11.STL"/>
+    <mesh name="servo_12" file="quadrapod reddit - Servo_motor.step-12.STL"/>
+    <mesh name="horn_1" file="quadrapod reddit - servo horn-1.STL"/>
+    <mesh name="horn_2" file="quadrapod reddit - servo horn-2.STL"/>
+    <mesh name="horn_3" file="quadrapod reddit - servo horn-3.STL"/>
+    <mesh name="horn_4" file="quadrapod reddit - servo horn-4.STL"/>
+    <mesh name="horn_5" file="quadrapod reddit - servo horn-5.STL"/>
+    <mesh name="horn_6" file="quadrapod reddit - servo horn-6.STL"/>
+    <mesh name="horn_7" file="quadrapod reddit - servo horn-7.STL"/>
+    <mesh name="horn_8" file="quadrapod reddit - servo horn-8.STL"/>
+    <mesh name="horn_9" file="quadrapod reddit - servo horn-9.STL"/>
+    <mesh name="horn_10" file="quadrapod reddit - servo horn-10.STL"/>
+    <mesh name="horn_11" file="quadrapod reddit - servo horn-11.STL"/>
+    <mesh name="horn_12" file="quadrapod reddit - servo horn-12.STL"/>
+    <mesh name="FL_clamp" file="quadrapod reddit - clamp 1 redesigned-1.STL"/>
+    <mesh name="FR_clamp" file="quadrapod reddit - clamp 1 redesigned-2.STL"/>
+    <mesh name="RL_clamp" file="quadrapod reddit - Mirrorclamp 1 redesigned-1.STL"/>
+    <mesh name="RR_clamp" file="quadrapod reddit - Mirrorclamp 1 redesigned-2.STL"/>
+    <mesh name="FL_mid" file="quadrapod reddit - mid clamp redesign-1.STL"/>
+    <mesh name="FR_mid" file="quadrapod reddit - mid clamp redesign-2.STL"/>
+    <mesh name="RL_mid" file="quadrapod reddit - Mirrormid clamp redesign---------------------1.STL"/>
+    <mesh name="RR_mid" file="quadrapod reddit - Mirrormid clamp redesign---------------------2.STL"/>
+    <mesh name="FL_tibia" file="quadrapod reddit - tibia RD-1.STL"/>
+    <mesh name="RL_tibia" file="quadrapod reddit - tibia RD-2.STL"/>
+    <mesh name="RR_tibia" file="quadrapod reddit - tibia RD-3.STL"/>
+    <mesh name="FR_tibia" file="quadrapod reddit - tibia RD-4.STL"/>
+    <mesh name="FL_tip" file="quadrapod reddit - tibia tip-1.STL"/>
+    <mesh name="RL_tip" file="quadrapod reddit - tibia tip-2.STL"/>
+    <mesh name="RR_tip" file="quadrapod reddit - tibia tip-3.STL"/>
+    <mesh name="FR_tip" file="quadrapod reddit - tibia tip-4.STL"/>
+  </asset>
+
+  <worldbody>
+    <body name="base_link" pos="0 0 0.06" childclass="visual">
+      <freejoint name="root"/>
+      <inertial pos="0 0 0.0086" mass="0.2025" fullinertia="7.194e-05 7.012e-05 1.310e-04 0 0 0"/>
+      <site name="imu" pos="0 0 0" size="0.003"/>
+      <geom mesh="base" pos="-0.0675254 -0.132465 -0.054649"/>
+      <geom mesh="servo_1" class="servo" pos="-0.0675254 -0.132465 -0.054649"/>
+      <geom mesh="servo_4" class="servo" pos="-0.0675254 -0.132465 -0.054649"/>
+      <geom mesh="servo_5" class="servo" pos="-0.0675254 -0.132465 -0.054649"/>
+      <geom mesh="servo_6" class="servo" pos="-0.0675254 -0.132465 -0.054649"/>
+      <geom mesh="base" class="collision" pos="-0.0675254 -0.132465 -0.054649"/>
+      <geom mesh="servo_1" class="collision" pos="-0.0675254 -0.132465 -0.054649"/>
+      <geom mesh="servo_4" class="collision" pos="-0.0675254 -0.132465 -0.054649"/>
+      <geom mesh="servo_5" class="collision" pos="-0.0675254 -0.132465 -0.054649"/>
+      <geom mesh="servo_6" class="collision" pos="-0.0675254 -0.132465 -0.054649"/>
+
+      <!-- FRONT LEFT -->
+      <body name="FL_coxa" pos="0.03752 0.037166 0.02855">
+        <joint name="FL_coxa_joint" axis="0 0 1" range="-1.5708 0.5236"/>
+        <inertial pos="-0.00046952 0.025303 -0.011077" mass="0.010901" fullinertia="1.3433e-06 1.1827e-06 1.1172e-06 7.7895e-08 -6.036e-08 2.6762e-07"/>
+        <geom mesh="FL_clamp" pos="-0.105045 -0.169631 -0.083199"/>
+        <geom mesh="horn_1" class="horn" pos="-0.105045 -0.169631 -0.083199"/>
+        <geom mesh="servo_2" class="servo" pos="-0.105045 -0.169631 -0.083199"/>
+        <geom mesh="FL_clamp" class="collision" pos="-0.105045 -0.169631 -0.083199"/>
+        <geom mesh="servo_2" class="collision" pos="-0.105045 -0.169631 -0.083199"/>
+        <body name="FL_femur" pos="0.016051 0.024277 -0.0074">
+          <joint name="FL_femur_joint" axis="0.9862 -0.1656 0"/>
+          <inertial pos="0.0037466 0.020988 0.0058263" mass="0.0024496" fullinertia="6.2957e-07 1.2071e-07 5.4206e-07 -8.8356e-08 -2.2326e-08 -1.359e-07"/>
+          <geom mesh="FL_mid" pos="-0.121096 -0.193908 -0.075799"/>
+          <geom mesh="horn_2" class="horn" pos="-0.121096 -0.193908 -0.075799"/>
+          <geom mesh="horn_3" class="horn" pos="-0.121096 -0.193908 -0.075799"/>
+          <geom mesh="FL_mid" class="collision" pos="-0.121096 -0.193908 -0.075799"/>
+          <body name="FL_tibia" pos="0.0063376 0.037747 0.014863">
+            <joint name="FL_tibia_joint" axis="0.9862 -0.1656 0" range="-0.9948 1.5708"/>
+            <inertial pos="-0.015733 0.0077231 -0.013664" mass="0.014061" fullinertia="7.1221e-06 6.6603e-06 1.4786e-06 -1.1556e-07 2.9199e-07 1.6351e-06"/>
+            <geom mesh="FL_tibia" pos="-0.127433 -0.231655 -0.0906616"/>
+            <geom mesh="FL_tip" pos="-0.127433 -0.231655 -0.0906616"/>
+            <geom mesh="servo_3" class="servo" pos="-0.127433 -0.231655 -0.0906616"/>
+            <geom mesh="FL_tibia" class="collision" pos="-0.127433 -0.231655 -0.0906616"/>
+            <geom mesh="servo_3" class="collision" pos="-0.127433 -0.231655 -0.0906616"/>
+            <geom name="FL_foot" mesh="FL_tip" class="collision" pos="-0.127433 -0.231655 -0.0906616"/>
+            <site name="FL_foot" pos="-0.01356 0.018587 -0.089869" size="0.002"/>
+          </body>
+        </body>
+      </body>
+
+      <!-- REAR LEFT -->
+      <body name="RL_coxa" pos="-0.037166 0.03752 0.02855">
+        <joint name="RL_coxa_joint" axis="0 0 1" range="-0.5760 1.5708"/>
+        <inertial pos="-0.0013273 0.025273 -0.010665" mass="0.010901" fullinertia="1.3421e-06 1.161e-06 1.1172e-06 -6.574e-08 4.0386e-08 2.6305e-07"/>
+        <geom mesh="RL_clamp" pos="-0.0303594 -0.169984 -0.083199"/>
+        <geom mesh="horn_4" class="horn" pos="-0.0303594 -0.169984 -0.083199"/>
+        <geom mesh="servo_7" class="servo" pos="-0.0303594 -0.169984 -0.083199"/>
+        <geom mesh="RL_clamp" class="collision" pos="-0.0303594 -0.169984 -0.083199"/>
+        <geom mesh="servo_7" class="collision" pos="-0.0303594 -0.169984 -0.083199"/>
+        <body name="RL_femur" pos="-0.017733 0.023077 -0.0069">
+          <joint name="RL_femur_joint" axis="-0.972 -0.2352 0"/>
+          <inertial pos="-0.005173 0.020448 0.0066131" mass="0.0024496" fullinertia="6.1528e-07 1.4603e-07 5.3144e-07 1.2108e-07 3.5638e-08 -1.4931e-07"/>
+          <geom mesh="RL_mid" pos="-0.0126263 -0.193062 -0.076299"/>
+          <geom mesh="horn_5" class="horn" pos="-0.0126263 -0.193062 -0.076299"/>
+          <geom mesh="horn_6" class="horn" pos="-0.0126263 -0.193062 -0.076299"/>
+          <geom mesh="RL_mid" class="collision" pos="-0.0126263 -0.193062 -0.076299"/>
+          <body name="RL_tibia" pos="-0.0088641 0.036639 0.016275">
+            <joint name="RL_tibia_joint" axis="-0.972 -0.2352 0" range="-1.5708 0.9948"/>
+            <inertial pos="0.014988 0.0094516 -0.013408" mass="0.014061" fullinertia="7.0932e-06 6.518e-06 1.65e-06 1.8779e-07 -4.667e-07 1.8427e-06"/>
+            <geom mesh="RL_tibia" pos="-0.00376213 -0.229701 -0.0925738"/>
+            <geom mesh="RL_tip" pos="-0.00376213 -0.229701 -0.0925738"/>
+            <geom mesh="servo_8" class="servo" pos="-0.00376213 -0.229701 -0.0925738"/>
+            <geom mesh="RL_tibia" class="collision" pos="-0.00376213 -0.229701 -0.0925738"/>
+            <geom mesh="servo_8" class="collision" pos="-0.00376213 -0.229701 -0.0925738"/>
+            <geom name="RL_foot" mesh="RL_tip" class="collision" pos="-0.00376213 -0.229701 -0.0925738"/>
+            <site name="RL_foot" pos="0.011155 0.022571 -0.089045" size="0.002"/>
+          </body>
+        </body>
+      </body>
+
+      <!-- REAR RIGHT -->
+      <body name="RR_coxa" pos="-0.03752 -0.037166 0.02855">
+        <joint name="RR_coxa_joint" axis="0 0 1" range="-1.5708 0.5760"/>
+        <inertial pos="-0.0015781 -0.02548 -0.010665" mass="0.010901" fullinertia="1.3287e-06 1.2335e-06 1.1761e-06 4.6707e-08 3.4993e-08 -2.6174e-07"/>
+        <geom mesh="RR_clamp" pos="-0.0300058 -0.0952989 -0.083199"/>
+        <geom mesh="horn_7" class="horn" pos="-0.0300058 -0.0952989 -0.083199"/>
+        <geom mesh="servo_9" class="servo" pos="-0.0300058 -0.0952989 -0.083199"/>
+        <geom mesh="RR_clamp" class="collision" pos="-0.0300058 -0.0952989 -0.083199"/>
+        <geom mesh="servo_9" class="collision" pos="-0.0300058 -0.0952989 -0.083199"/>
+        <body name="RR_femur" pos="-0.01738 -0.023431 -0.0069">
+          <joint name="RR_femur_joint" axis="-0.972 0.2352 0"/>
+          <inertial pos="-0.0052527 -0.020428 0.0066131" mass="0.0024496" fullinertia="6.1521e-07 1.461e-07 5.3144e-07 -1.2122e-07 3.5146e-08 1.4943e-07"/>
+          <geom mesh="RR_mid" pos="-0.0126263 -0.0718681 -0.076299"/>
+          <geom mesh="horn_8" class="horn" pos="-0.0126263 -0.0718681 -0.076299"/>
+          <geom mesh="horn_9" class="horn" pos="-0.0126263 -0.0718681 -0.076299"/>
+          <geom mesh="RR_mid" class="collision" pos="-0.0126263 -0.0718681 -0.076299"/>
+          <body name="RR_tibia" pos="-0.0088641 -0.036639 0.016275">
+            <joint name="RR_tibia_joint" axis="-0.972 0.2352 0" range="-1.0996 1.5708"/>
+            <inertial pos="0.014988 -0.0094516 -0.013408" mass="0.014061" fullinertia="7.0932e-06 6.518e-06 1.65e-06 -1.8779e-07 -4.667e-07 -1.8427e-06"/>
+            <geom mesh="RR_tibia" pos="-0.00376213 -0.0352287 -0.0925738"/>
+            <geom mesh="RR_tip" pos="-0.00376213 -0.0352287 -0.0925738"/>
+            <geom mesh="servo_10" class="servo" pos="-0.00376213 -0.0352287 -0.0925738"/>
+            <geom mesh="RR_tibia" class="collision" pos="-0.00376213 -0.0352287 -0.0925738"/>
+            <geom mesh="servo_10" class="collision" pos="-0.00376213 -0.0352287 -0.0925738"/>
+            <geom name="RR_foot" mesh="RR_tip" class="collision" pos="-0.00376213 -0.0352287 -0.0925738"/>
+            <site name="RR_foot" pos="0.011155 -0.022571 -0.089045" size="0.002"/>
+          </body>
+        </body>
+      </body>
+
+      <!-- FRONT RIGHT -->
+      <body name="FR_coxa" pos="0.037166 -0.03752 0.02855">
+        <joint name="FR_coxa_joint" axis="0 0 1" range="-0.5236 1.5708"/>
+        <inertial pos="0.00049728 -0.024847 -0.011077" mass="0.010901" fullinertia="1.333e-06 1.252e-06 1.1761e-06 -5.2976e-08 -5.7648e-08 -2.6716e-07"/>
+        <geom mesh="FR_clamp" pos="-0.104691 -0.0949453 -0.083199"/>
+        <geom mesh="horn_10" class="horn" pos="-0.104691 -0.0949453 -0.083199"/>
+        <geom mesh="servo_11" class="servo" pos="-0.104691 -0.0949453 -0.083199"/>
+        <geom mesh="FR_clamp" class="collision" pos="-0.104691 -0.0949453 -0.083199"/>
+        <geom mesh="servo_11" class="collision" pos="-0.104691 -0.0949453 -0.083199"/>
+        <body name="FR_femur" pos="0.016404 -0.023924 -0.0074">
+          <joint name="FR_femur_joint" axis="0.9862 0.1656 0"/>
+          <inertial pos="0.0038275 -0.020974 0.0058263" mass="0.0024496" fullinertia="6.2952e-07 1.2075e-07 5.4205e-07 8.8493e-08 -2.1821e-08 1.3599e-07"/>
+          <geom mesh="FR_mid" pos="-0.121096 -0.0710214 -0.075799"/>
+          <geom mesh="horn_11" class="horn" pos="-0.121096 -0.0710214 -0.075799"/>
+          <geom mesh="horn_12" class="horn" pos="-0.121096 -0.0710214 -0.075799"/>
+          <geom mesh="FR_mid" class="collision" pos="-0.121096 -0.0710214 -0.075799"/>
+          <body name="FR_tibia" pos="0.0063376 -0.037747 0.014863">
+            <joint name="FR_tibia_joint" axis="0.9862 0.1656 0" range="-1.5708 0.9948"/>
+            <inertial pos="-0.015733 -0.0077231 -0.013664" mass="0.014061" fullinertia="7.1221e-06 6.6603e-06 1.4786e-06 1.1556e-07 2.9199e-07 -1.6351e-06"/>
+            <geom mesh="FR_tibia" pos="-0.127433 -0.0332746 -0.0906616"/>
+            <geom mesh="FR_tip" pos="-0.127433 -0.0332746 -0.0906616"/>
+            <geom mesh="servo_12" class="servo" pos="-0.127433 -0.0332746 -0.0906616"/>
+            <geom mesh="FR_tibia" class="collision" pos="-0.127433 -0.0332746 -0.0906616"/>
+            <geom mesh="servo_12" class="collision" pos="-0.127433 -0.0332746 -0.0906616"/>
+            <geom name="FR_foot" mesh="FR_tip" class="collision" pos="-0.127433 -0.0332746 -0.0906616"/>
+            <site name="FR_foot" pos="-0.01356 -0.018587 -0.089869" size="0.002"/>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <position name="FL_coxa" joint="FL_coxa_joint"/>
+    <position name="FL_femur" joint="FL_femur_joint"/>
+    <position name="FL_tibia" joint="FL_tibia_joint"/>
+    <position name="RL_coxa" joint="RL_coxa_joint"/>
+    <position name="RL_femur" joint="RL_femur_joint"/>
+    <position name="RL_tibia" joint="RL_tibia_joint"/>
+    <position name="RR_coxa" joint="RR_coxa_joint"/>
+    <position name="RR_femur" joint="RR_femur_joint"/>
+    <position name="RR_tibia" joint="RR_tibia_joint"/>
+    <position name="FR_coxa" joint="FR_coxa_joint"/>
+    <position name="FR_femur" joint="FR_femur_joint"/>
+    <position name="FR_tibia" joint="FR_tibia_joint"/>
+  </actuator>
+
+  <sensor>
+    <framequat name="imu_quat" objtype="site" objname="imu"/>
+    <gyro name="imu_gyro" site="imu"/>
+    <accelerometer name="imu_acc" site="imu"/>
+  </sensor>
+
+  <keyframe>
+    <key name="home" qpos="0 0 0.06 1 0 0 0  0 0 0  0 0 0  0 0 0  0 0 0" ctrl="0 0 0  0 0 0  0 0 0  0 0 0"/>
+  </keyframe>
+</mujoco>
