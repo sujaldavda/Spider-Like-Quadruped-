@@ -7,6 +7,13 @@ robot kinematics and coordinated multi-servo control.
 Demo Video:
 https://drive.google.com/file/d/1aahqjPfIVHdNBdxC4B8d9cbAuSaYIsEc/view
 
+Running in [ARRoW](https://github.com/low-control-labs/ARRoW/):
+
+
+https://github.com/user-attachments/assets/3af7654e-aacc-4cc6-b1e2-f65ca9f42708
+
+
+
 Hardware:
 - ESP8266
 - 12x SG90 Servo Motors

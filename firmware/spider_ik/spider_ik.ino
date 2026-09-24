@@ -109,9 +109,9 @@ bool writeLeg(int leg, const Joints &q)
 const char *resultText(Result r)
 {
   switch (r) {
-    case TOO_CLOSE:    return "target too close to coxa axis";
-    case OUT_OF_REACH: return "target out of reach";
-    case JOINT_LIMIT:  return "joint limit";
+    case Result::TOO_CLOSE:    return "target too close to coxa axis";
+    case Result::OUT_OF_REACH: return "target out of reach";
+    case Result::JOINT_LIMIT:  return "joint limit";
     default:           return "ok";
   }
 }
@@ -119,9 +119,9 @@ const char *resultText(Result r)
 bool solveLeg(int leg, float x, float y, float z, Joints &q)
 {
   Result r = inverse(LEGS[leg], x, y, z, q);
-  if (r != OK) {
+  if (r != Result::OK) {
     Serial.printf("ERROR: %s -> (%.1f, %.1f, %.1f): %s", LEGS[leg].name, x, y, z, resultText(r));
-    if (r == JOINT_LIMIT) Serial.printf(" (coxa %.1f femur %.1f tibia %.1f)", q.coxa, q.femur, q.tibia);
+    if (r == Result::JOINT_LIMIT) Serial.printf(" (coxa %.1f femur %.1f tibia %.1f)", q.coxa, q.femur, q.tibia);
     Serial.println();
     return false;
   }
